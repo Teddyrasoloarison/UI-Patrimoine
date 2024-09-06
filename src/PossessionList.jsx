@@ -45,7 +45,7 @@ const PossessionList = () => {
 
   const handleDelete = async (libelle) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/possession/${libelle}`, {
+      const response = await fetch(`${urlBackend}/api/possession/${libelle}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
