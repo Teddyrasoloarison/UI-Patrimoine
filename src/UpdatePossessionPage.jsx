@@ -48,7 +48,7 @@ const UpdatePossessionPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          libelle // On met uniquement à jour le libellé
+          nouveauLibelle: libelle, // On met uniquement à jour le libellé
         }),
       });
   
