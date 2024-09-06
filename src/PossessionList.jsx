@@ -7,6 +7,7 @@ const PossessionList = () => {
   const [possessions, setPossessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const urlBackend = 'https://examen2-web2-patrimoine.onrender.com';
 
   // Fetch the list of possessions from the API
   useEffect(() => {
@@ -29,7 +30,7 @@ const PossessionList = () => {
 
   const handleClose = async (libelle) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/possession/${libelle}/close`, {
+      const response = await fetch(`${urlBackend}/api/possession/${libelle}/close`, {
         method: 'PATCH',
       });
       if (!response.ok) {

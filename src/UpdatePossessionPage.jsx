@@ -10,12 +10,13 @@ const UpdatePossessionPage = () => {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null);
+  const urlBackend = 'https://examen2-web2-patrimoine.onrender.com';
 
   useEffect(() => {
     const fetchPossession = async () => {
       try {
         console.log('Fetching possession for libelle:', libelle);
-        const response = await fetch(`http://localhost:3001/api/possession/${libelle}`);
+        const response = await fetch(`${urlBackend}/api/possession/${libelle}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -108,46 +109,57 @@ const UpdatePossessionPage = () => {
 
 
   return (
-    <div>
-      <h1>Update Possession</h1>
-      {currentPossession ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleUpdate();
-          }}
-        >
-          <div className="form-group">
-            <label htmlFor="valeur">Valeur</label>
-            <input
-              type="number"
-              id="valeur"
-              value={valeur}
-              onChange={(e) => setValeur(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="dateFin">Date Fin</label>
-            <input
-              type="date"
-              id="dateFin"
-              value={dateFin}
-              onChange={(e) => setDateFin(e.target.value)}
-            />
-          </div>
-          <button type="submit" disabled={loading}>
-            {loading ? 'Updating...' : 'Update'}
-          </button>
-        </form>
-      ) : (
-        <p>Loading...</p>
-      )}
+  
+  <div>
+    <h1>Update Possession</h1>
+    {currentPossession ? (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleUpdate();
+        }}
+      >
+        <div className="form-group">
+          <label htmlFor="libelle">Libellé</label>
+          <input
+            type="text"
+            id="libelle"
+            value={libelle}
+            onChange={(e) => setLibelle(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="valeur">Valeur</label>
+          <input
+            type="number"
+            id="valeur"
+            value={valeur}
+            disabled
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="dateFin">Date Fin</label>
+          <input
+            type="date"
+            id="dateFin"
+            value={dateFin}
+            onChange={(e) => setDateFin(e.target.value)}
+          />
+        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Updating...' : 'Update'}
+        </button>
+      </form>
+    ) : (
+      <p>Loading...</p>
+    )}
 
-      {successMessage && <p>{successMessage}</p>}
-      {error && <p>Error: {error}</p>}
-    </div>
-  );
+    {successMessage && <p>{successMessage}</p>}
+    {error && <p>Error: {error}</p>}
+  </div>
+);
+
 };
 
 export default UpdatePossessionPage;
