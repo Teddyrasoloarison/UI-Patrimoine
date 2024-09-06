@@ -16,13 +16,11 @@ const UpdatePossessionPage = () => {
   useEffect(() => {
     const fetchPossession = async () => {
       try {
-        console.log('Fetching possession for libelle:', libelle);
-        const response = await fetch(`${urlBackend}/api/possession/${libelle}`);
+        const response = await fetch(`${urlBackend}/api/possession/${libelleFromParams}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched possession data:', data);
         setCurrentPossession(data);
         setValeur(data.valeur);
         setDateFin(data.dateFin || '');
@@ -33,97 +31,71 @@ const UpdatePossessionPage = () => {
       }
     };
     fetchPossession();
-  }, [libelle]);
+  }, [libelleFromParams]);
 
   const handleUpdate = async () => {
     setLoading(true);
     setError(null);
     setSuccessMessage(null);
-  
+
     try {
-      console.log('Mise à jour du libellé:', libelle);
-  
       const response = await fetch(`${urlBackend}/api/possession/${libelleFromParams}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nouveauLibelle: libelle, // Envoie nouveauLibelle au lieu de libelle
+          nouveauLibelle: libelle, // Envoi du nouveau libellé au backend
         }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Network response was not ok: ${errorData.message || 'Unknown error'}`);
+        throw new Error(errorData.message || 'Unknown error');
       }
-  
+
       const data = await response.json();
       setSuccessMessage('Possession mise à jour avec succès!');
-      navigate('/possession');
+      navigate('/possession'); // Rediriger après la mise à jour
     } catch (error) {
       setError(error.message);
-      console.error('Erreur dans handleUpdate:', error);
     } finally {
       setLoading(false);
     }
   };
-  
-  
-
 
   return (
-  
-  <div>
-    <h1>Update Possession</h1>
-    {currentPossession ? (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleUpdate();
-        }}
-      >
-        <div className="form-group">
-          <label htmlFor="libelle">Libellé</label>
-          <input
-            type="text"
-            id="libelle"
-            value={libelle}
-            onChange={(e) => setLibelle(e.target.value)}
-            required
-          />
-        </div>
-        {/*<div className="form-group">
-          <label htmlFor="valeur">Valeur</label>
-          <input
-            type="number"
-            id="valeur"
-            value={valeur}
-            disabled
-          />
-        </div>*/}
-        {/*<div className="form-group">
-          <label htmlFor="dateFin">Date Fin</label>
-          <input
-            type="date"
-            id="dateFin"
-            value={dateFin}
-            onChange={(e) => setDateFin(e.target.value)}
-          />
-        </div>*/}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Updating...' : 'Update'}
-        </button>
-      </form>
-    ) : (
-      <p>Loading...</p>
-    )}
+    <div>
+      <h1>Update Possession</h1>
+      {currentPossession ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdate();
+          }}
+        >
+          <div className="form-group">
+            <label htmlFor="libelle">Libellé</label>
+            <input
+              type="text"
+              id="libelle"
+              value={libelle}
+              onChange={(e) => setLibelle(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Updating...' : 'Update'}
+          </button>
+        </form>
+      ) : (
+        <p>Loading...</p>
+      )}
 
-    {successMessage && <p>{successMessage}</p>}
-    {error && <p>Error: {error}</p>}
-  </div>
-);
-
+      {successMessage && <p>{successMessage}</p>}
+      {error && <p>Error: {error}</p>}
+    </div>
+  );
 };
 
 export default UpdatePossessionPage;
