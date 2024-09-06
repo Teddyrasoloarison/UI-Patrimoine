@@ -13,7 +13,7 @@ const PossessionList = () => {
   useEffect(() => {
     const fetchPossessions = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/possession');
+        const response = await fetch(`${urlBackend}/api/possession`);
         if (!response.ok) {
           throw new Error('Failed to fetch possessions');
         }
