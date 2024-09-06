@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdatePossessionPage = () => {
-  const { libelle } = useParams();
+  const { libelle: libelleFromParams } = useParams();
   const navigate = useNavigate();
+  const [libelle, setLibelle] = useState(libelleFromParams);
   const [currentPossession, setCurrentPossession] = useState(null);
   const [valeur, setValeur] = useState('');
   const [dateFin, setDateFin] = useState('');
@@ -25,6 +26,7 @@ const UpdatePossessionPage = () => {
         setCurrentPossession(data);
         setValeur(data.valeur);
         setDateFin(data.dateFin || '');
+        setLibelle(data.libelle);
       } catch (error) {
         setError(error.message);
         console.error('Erreur lors de la récupération des données:', error);
@@ -85,6 +87,7 @@ const UpdatePossessionPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          libelle,
           valeur,
           dateFin: formattedDateFin, 
         }),
@@ -125,11 +128,11 @@ const UpdatePossessionPage = () => {
             type="text"
             id="libelle"
             value={libelle}
-            onChange={(e) => libelle(e.target.value)}
+            onChange={(e) => setLibelle(e.target.value)}
             required
           />
         </div>
-        <div className="form-group">
+        {/*<div className="form-group">
           <label htmlFor="valeur">Valeur</label>
           <input
             type="number"
@@ -137,7 +140,7 @@ const UpdatePossessionPage = () => {
             value={valeur}
             disabled
           />
-        </div>
+        </div>*/}
         <div className="form-group">
           <label htmlFor="dateFin">Date Fin</label>
           <input
