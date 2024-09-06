@@ -141,7 +141,7 @@ const UpdatePossessionPage = () => {
             disabled
           />
         </div>*/}
-        <div className="form-group">
+        {/*<div className="form-group">
           <label htmlFor="dateFin">Date Fin</label>
           <input
             type="date"
@@ -149,7 +149,7 @@ const UpdatePossessionPage = () => {
             value={dateFin}
             onChange={(e) => setDateFin(e.target.value)}
           />
-        </div>
+        </div>*/}
         <button type="submit" disabled={loading}>
           {loading ? 'Updating...' : 'Update'}
         </button>
