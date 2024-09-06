@@ -86,7 +86,7 @@ const UpdatePossessionPage = () => {
         },
         body: JSON.stringify({
           valeur,
-          dateFin: formattedDateFin, // Assurez-vous d'envoyer la date correctement formatée
+          dateFin: formattedDateFin, 
         }),
       });
   
@@ -125,7 +125,7 @@ const UpdatePossessionPage = () => {
             type="text"
             id="libelle"
             value={libelle}
-            onChange={(e) => setLibelle(e.target.value)}
+            onChange={(e) => libelle(e.target.value)}
             required
           />
         </div>
