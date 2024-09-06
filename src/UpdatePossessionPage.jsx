@@ -35,61 +35,20 @@ const UpdatePossessionPage = () => {
     fetchPossession();
   }, [libelle]);
 
-  /*const handleUpdate = async () => {
-    setLoading(true);
-    setError(null);
-    setSuccessMessage(null);
-
-    try {
-      console.log('Mise à jour avec les données :', {
-        valeur,
-        dateFin
-      });
-
-      const response = await fetch(`http://localhost:3001/api/possession/${libelle}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          valeur,
-          dateFin
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Network response was not ok: ${errorData.message || 'Unknown error'}`);
-      }
-
-      const data = await response.json();
-      console.log('Update response:', data);
-      setSuccessMessage('Possession mise à jour avec succès!');
-      navigate('/possession'); // Redirect to the list of possessions
-    } catch (error) {
-      setError(error.message);
-      console.error('Erreur dans handleUpdate:', error); // Affiche l'erreur
-    } finally {
-      setLoading(false);
-    }
-  };*/
   const handleUpdate = async () => {
     setLoading(true);
     setError(null);
     setSuccessMessage(null);
   
     try {
-      const formattedDateFin = new Date(dateFin).toISOString(); // Formatage de la date
-  
-      const response = await fetch(`${urlBackend}/api/possession/${libelle}`, {
+      // Requête PUT pour mettre à jour uniquement le libellé
+      const response = await fetch(`${urlBackend}/api/possession/${libelleFromParams}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          libelle,
-          valeur,
-          dateFin: formattedDateFin, 
+          libelle // On met uniquement à jour le libellé
         }),
       });
   
@@ -99,8 +58,8 @@ const UpdatePossessionPage = () => {
       }
   
       const data = await response.json();
-      setSuccessMessage('Possession mise à jour avec succès!');
-      navigate('/possession'); // Redirect to the list of possessions
+      setSuccessMessage('Libellé mis à jour avec succès!');
+      navigate('/possession'); // Redirection après la mise à jour
     } catch (error) {
       setError(error.message);
       console.error('Erreur dans handleUpdate:', error);
@@ -108,6 +67,7 @@ const UpdatePossessionPage = () => {
       setLoading(false);
     }
   };
+  
   
 
 
