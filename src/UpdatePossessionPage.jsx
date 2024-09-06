@@ -41,14 +41,15 @@ const UpdatePossessionPage = () => {
     setSuccessMessage(null);
   
     try {
-      // Requête PUT pour mettre à jour uniquement le libellé
+      console.log('Mise à jour du libellé:', libelle);
+  
       const response = await fetch(`${urlBackend}/api/possession/${libelleFromParams}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nouveauLibelle: libelle, 
+          nouveauLibelle: libelle, // Envoie nouveauLibelle au lieu de libelle
         }),
       });
   
@@ -58,8 +59,8 @@ const UpdatePossessionPage = () => {
       }
   
       const data = await response.json();
-      setSuccessMessage('Libellé mis à jour avec succès!');
-      navigate('/possession'); // Redirection après la mise à jour
+      setSuccessMessage('Possession mise à jour avec succès!');
+      navigate('/possession');
     } catch (error) {
       setError(error.message);
       console.error('Erreur dans handleUpdate:', error);
